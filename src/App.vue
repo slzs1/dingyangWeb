@@ -1,18 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <p>{{state.a}}</p>
+    <p>{{state.gf.b}}</p>
+    <p>{{state.gf.f.c}}</p>
+    <p>{{state.gf.f.s.d}}</p>
+    <button @click="myfn">按钮</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {shallowRef,triggerRef} from 'vue';
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  setup() {
+    let state = shallowRef({
+      a: 'a',
+      gf: {
+        b: 'b',
+        f: {
+          c: 'c',
+          s: {
+            d: 'd'
+          }
+        }
+      }
+    });
+    function myfn(){
+      // state.a='1';
+      // state.gf.b='2';
+      // state.gf.f.c='3',
+      state.value.gf.f.s.d='4';
+      triggerRef(state);
+
+      console.log(state);
+      console.log(state.value);
+      console.log(state.value.gf);
+      console.log(state.value.gf.f);
+      console.log(state.value.gf.f.s);
+   }
+   return{state, myfn}
+   }  
 }
 </script>
 
